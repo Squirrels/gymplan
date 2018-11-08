@@ -22,7 +22,7 @@ export class CreateExercise extends React.Component {
 
   handlePress(){
     // Validate data
-    this.props.onExerciseCreate(this.state.name);
+    this.props.onExerciseSave({exercise: this.props.existingExercise,name: this.state.name});
   }
 
   render() {
@@ -34,6 +34,7 @@ export class CreateExercise extends React.Component {
           placeholder="Exercise1"
           value={this.state.name}
           onChangeText={(name) => this.setState({name})}
+          autoFocus={true}
         />
         <Button
           onPress={() => this.handlePress() }

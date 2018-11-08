@@ -39,10 +39,10 @@ export default class WorkoutDetailsScreen extends React.Component {
     };
   }
 
-  _onExerciseCreate(name){
-    console.log(name);
+  _onExerciseCreate(data){
+    console.log(data.name);
     // Create new Exercise
-    var newExercise = new Exercise(name);
+    var newExercise = new Exercise(data.name);
     // Add it
     let workout = this.state.workout;
     workout.exercises = workout.exercises.concat([newExercise]);
@@ -51,8 +51,19 @@ export default class WorkoutDetailsScreen extends React.Component {
   }
 
   _onExerciseUpdate(data){
-    console.log("Updating");
-    console.log(data);
+    console.log("Oh damn");
+    // Find the old one
+    var oldExercise = data.exercise;
+    var exercises = this.state.workout.exercises;
+    for(var i=0; i<exercises.length; i++){
+      if(exercises[i] === oldExercise){
+        exercises[i].name = data.name;
+      }
+    }
+    // Update the workout
+    var workout = this.state.workout;
+    workout.exercises = exercises;
+    this.setState({workout: workout});
   }
 
   render() {
@@ -61,8 +72,8 @@ export default class WorkoutDetailsScreen extends React.Component {
     const navigation = this.props.navigation;
     return (
         <View style={styles.container}>
-          <ExercisesListView navigation={navigation} exercises={exercises} onExerciseUpdate={this._onExerciseUpdate.bind(this)}/>
-          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => navigation.navigate('NewExercise', {onExerciseCreate: this._onExerciseCreate.bind(this)})}>
+          <ExercisesListView navigation={navigation} exercises={exercises} onExerciseSave={this._onExerciseUpdate.bind(this)}/>
+          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => navigation.navigate('NewExercise', {onExerciseSave: this._onExerciseCreate.bind(this)})}>
           </ActionButton>
         </View>
     );

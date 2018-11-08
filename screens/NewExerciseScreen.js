@@ -7,7 +7,6 @@ import {
   TextInput,
   Platform
 } from 'react-native';
-
 import { CreateExercise } from '../components/CreateExercise'
 
 export default class NewExerciseScreen extends React.Component {
@@ -25,13 +24,16 @@ export default class NewExerciseScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleCreatePress = this.handleCreatePress.bind(this);
+    if(this.props.navigation.getParam('exercise') !== undefined){
+      this.props.navigation.setParams({headerTitle:'Update Exercise'});
+    }
+    this.handleSavePress = this.handleSavePress.bind(this);
   }
 
-  handleCreatePress(name){
+  handleSavePress(data){
     const { params} = this.props.navigation.state;
     // Send the name
-    params.onExerciseCreate(name);
+    params.onExerciseSave(data);
     // Navigate back
     this.props.navigation.goBack();
   }
@@ -40,7 +42,7 @@ export default class NewExerciseScreen extends React.Component {
     var existingExercise = this.props.navigation.getParam('exercise');
     return (
         <View style={styles.container}>
-          <CreateExercise existingExercise={existingExercise} onExerciseCreate={this.handleCreatePress.bind(this)}/>
+          <CreateExercise existingExercise={existingExercise} onExerciseSave={this.handleSavePress.bind(this)}/>
         </View>
     );
   }

@@ -8,7 +8,11 @@ import {
   TextInput
 } from 'react-native';
 
-export default class NewWorkoutScreen extends React.Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { createWorkout } from '../actions/WorkoutActions';
+
+class NewWorkoutScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: 'Create New Workout',
@@ -29,9 +33,12 @@ export default class NewWorkoutScreen extends React.Component {
   }
 
   handleCreatePress(){
-    const { params } = this.props.navigation.state;
+    //const { params } = this.props.navigation.state;
     // Send the name
-    params.onWorkoutCreate(this.state.name);
+    //params.onWorkoutCreate(this.state.name);
+    console.log("Creating");
+    var result = this.props.createWorkout(this.state.name);
+    console.log(result);
     // Navigate back
     this.props.navigation.goBack();
   }
@@ -46,6 +53,7 @@ export default class NewWorkoutScreen extends React.Component {
             placeholder="Workout1"
             value={this.state.name}
             onChangeText={(name) => this.setState({name})}
+            autoFocus={true}
           />
           <Button
             onPress={() => this.handleCreatePress() }
@@ -63,3 +71,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
    }
 });
+
+const mapStateToProps = (state) => {
+  const { workouts } = state
+  return { workouts }
+};
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    createWorkout,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewWorkoutScreen);

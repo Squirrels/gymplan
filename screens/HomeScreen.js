@@ -14,10 +14,12 @@ import { MonoText } from '../components/StyledText';
 import { WorkoutListView } from '../components/WorkoutListView'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 
-import Workout from '../models/Workout.js'
+import Workout from '../models/Workout.js';
+import Exercise from '../models/Exercise.js'
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "GymPlan",
     headerStyle: {
@@ -34,27 +36,26 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     // Get the data
-    var initialWorkout = new Workout("Workout 1");
-    this.state ={
-      workouts: [
-        initialWorkout
-      ]
-    };
+    // var initialWorkout = new Workout("Workout 1");
+    // initialWorkout.exercises.push(new Exercise("Sample Exercise"))
   }
 
-  _onWorkoutCreate(name){
-    console.log("Creating workout called " + name);
+  _onWorkoutCreate(data){
+    console.log("Creating workout called " + data.name);
     // Add it to state
     const workouts  = this.state.workouts;
     //this.setState({workouts: [..this.state.workouts]});
-    var newWorkout = new Workout(name);
+    var newWorkout = new Workout(data.name);
     this.setState({
       workouts: workouts.concat([newWorkout])
     });
   }
 
   render() {
-    const workouts  = this.state.workouts;
+    const workouts  = this.props.workouts;
+    console.log("Workouts render: ");
+    console.log(workouts);
+    //console.log(workouts);
     return (
         <View style={styles.container}>
           <WorkoutListView navigation={this.props.navigation} workouts={workouts} />
@@ -109,3 +110,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+const mapStateToProps = (state) => {
+  console.log("Mapping");
+  console.log(state);
+  const { workouts } = state
+  return { workouts }
+};
+
+export default connect(mapStateToProps)(HomeScreen);

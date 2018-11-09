@@ -40,26 +40,12 @@ class HomeScreen extends React.Component {
     // initialWorkout.exercises.push(new Exercise("Sample Exercise"))
   }
 
-  _onWorkoutCreate(data){
-    console.log("Creating workout called " + data.name);
-    // Add it to state
-    const workouts  = this.state.workouts;
-    //this.setState({workouts: [..this.state.workouts]});
-    var newWorkout = new Workout(data.name);
-    this.setState({
-      workouts: workouts.concat([newWorkout])
-    });
-  }
-
   render() {
-    const workouts  = this.props.workouts;
-    console.log("Workouts render: ");
-    console.log(workouts);
-    //console.log(workouts);
+    const workouts  = this.props.workouts.all;
     return (
         <View style={styles.container}>
           <WorkoutListView navigation={this.props.navigation} workouts={workouts} />
-          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => this.props.navigation.navigate('NewWorkout', {onWorkoutCreate: this._onWorkoutCreate.bind(this)})}>
+          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => this.props.navigation.navigate('NewWorkout')}>
           </ActionButton>
         </View>
     );
@@ -112,10 +98,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log("Mapping");
-  console.log(state);
-  const { workouts } = state
-  return { workouts }
+  return state;
 };
 
 export default connect(mapStateToProps)(HomeScreen);

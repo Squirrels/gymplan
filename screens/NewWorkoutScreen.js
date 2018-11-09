@@ -33,12 +33,9 @@ class NewWorkoutScreen extends React.Component {
   }
 
   handleCreatePress(){
-    //const { params } = this.props.navigation.state;
+    // Validate data
     // Send the name
-    //params.onWorkoutCreate(this.state.name);
-    console.log("Creating");
-    var result = this.props.createWorkout(this.state.name);
-    console.log(result);
+    this.props.createWorkout(this.state.name);
     // Navigate back
     this.props.navigation.goBack();
   }
@@ -53,6 +50,7 @@ class NewWorkoutScreen extends React.Component {
             placeholder="Workout1"
             value={this.state.name}
             onChangeText={(name) => this.setState({name})}
+            onSubmitEditing={() => this.handleCreatePress() }
             autoFocus={true}
           />
           <Button
@@ -72,10 +70,6 @@ const styles = StyleSheet.create({
    }
 });
 
-const mapStateToProps = (state) => {
-  const { workouts } = state
-  return { workouts }
-};
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -83,4 +77,4 @@ const mapDispatchToProps = dispatch => (
   }, dispatch)
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewWorkoutScreen);
+export default connect(null, mapDispatchToProps)(NewWorkoutScreen);

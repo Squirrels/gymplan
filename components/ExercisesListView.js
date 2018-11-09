@@ -10,6 +10,7 @@ export class ExercisesListView extends React.Component {
   render() {
   	// Get the list of all exercises from the props
     const exercises  = this.props.exercises;
+    const workout = this.props.workout;
     if (exercises.length === 0){
       return(
         <Text> No Exercises! </Text>
@@ -24,7 +25,7 @@ export class ExercisesListView extends React.Component {
                   key={exercise.name}
                   title={exercise.name}
                   subtitle={exercise.name}
-                  onPress={() => this.props.navigation.navigate('NewExercise', {exercise: exercise, onExerciseSave: this.props.onExerciseSave.bind(this)})}
+                  onPress={() => this.props.navigation.navigate('NewExercise', {workout: workout, exercise: exercise})}
                 />
               ))
             }

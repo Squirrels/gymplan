@@ -7,9 +7,13 @@ import {
   TextInput,
   Platform
 } from 'react-native';
-import { CreateExercise } from '../components/CreateExercise'
 
-export default class NewExerciseScreen extends React.Component {
+import { CreateExerciseForm } from '../components/CreateExerciseForm'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addExercise, editExercise } from '../actions/WorkoutActions';
+
+class NewExerciseScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: 'Create New Exercise',
@@ -21,19 +25,27 @@ export default class NewExerciseScreen extends React.Component {
     };
   };
 
-
   constructor(props) {
     super(props);
     if(this.props.navigation.getParam('exercise') !== undefined){
+      this.state = {editing: true}
       this.props.navigation.setParams({headerTitle:'Update Exercise'});
     }
     this.handleSavePress = this.handleSavePress.bind(this);
   }
 
   handleSavePress(data){
-    const { params} = this.props.navigation.state;
+    // Get the workout from the params
+    if(this.state && this.state.editing !== null){
+      this.props.editExercise(data);
+    } else{
+      this.props.addExercise(data);
+    }
+    
+    
+    //const { params} = this.props.navigation.state;
     // Send the name
-    params.onExerciseSave(data);
+    //params.onExerciseSave(data);
     // Navigate back
     this.props.navigation.goBack();
   }
@@ -42,7 +54,7 @@ export default class NewExerciseScreen extends React.Component {
     var existingExercise = this.props.navigation.getParam('exercise');
     return (
         <View style={styles.container}>
-          <CreateExercise existingExercise={existingExercise} onExerciseSave={this.handleSavePress.bind(this)}/>
+          <CreateExerciseForm workout={this.props.navigation.getParam('workout')} existingExercise={existingExercise} onExerciseSave={this.handleSavePress.bind(this)}/>
         </View>
     );
   }
@@ -54,3 +66,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
    }
 });
+
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    addExercise,editExercise
+  }, dispatch)
+);
+
+export default connect(null, mapDispatchToProps)(NewExerciseScreen);

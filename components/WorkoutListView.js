@@ -10,18 +10,21 @@ export class WorkoutListView extends React.Component {
   render() {
   	// Get the list of all workouts from the props
     const workouts  = this.props.workouts;
-  	return (<ScrollView><List style={styles.container}>
-              {
-						    workouts.map((workout) => (
-						      <ListItem
-						        key={workout.name}
-						        title={workout.name}
-						        subtitle={workout.exercises.length + " exercises"}
-						        onPress={() => this.props.navigation.navigate('WorkoutDetails', {workout: workout})}
-						      />
-						    ))
-						  }
-            </List></ScrollView>);
+  	return (
+      <ScrollView>
+        <List style={styles.container}>
+          {
+  			    workouts.map((workout) => (
+  			      <ListItem
+  			        key={workout.name}
+  			        title={workout.name}
+  			        subtitle={workout.exercises.length + " exercises"}
+  			        onPress={() => this.props.navigation.navigate('WorkoutDetails', {workout: workout})}
+  			      />
+  			    ))
+  			  }
+        </List>
+    </ScrollView>);
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button, Platform } from 'react-native';
 
-export class CreateExercise extends React.Component {
+export class CreateExerciseForm extends React.Component {
   constructor(props) {
     super(props);
     // Check if we got an exercise from props
@@ -22,7 +22,7 @@ export class CreateExercise extends React.Component {
 
   handlePress(){
     // Validate data
-    this.props.onExerciseSave({exercise: this.props.existingExercise,name: this.state.name});
+    this.props.onExerciseSave({workout: this.props.workout, exercise: this.props.existingExercise, new_exercise: {name: this.state.name}});
   }
 
   render() {
@@ -34,6 +34,7 @@ export class CreateExercise extends React.Component {
           placeholder="Exercise1"
           value={this.state.name}
           onChangeText={(name) => this.setState({name})}
+          onSubmitEditing={() => this.handlePress() }
           autoFocus={true}
         />
         <Button

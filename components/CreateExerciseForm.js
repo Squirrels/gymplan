@@ -11,42 +11,15 @@ export class CreateExerciseForm extends React.Component {
       this.state = {
         name: exercise.name,
         sets: exercise.sets,
+        config: exercise.config,
         updating: true,
-        radioButtons: [
-          {
-            label: 'In Progress',
-            value: 'stage-1',
-            checked: true,
-            color: '#484',
-            disabled: true,
-            flexDirection: 'row',
-            size: 14
-          },
-          {
-            label: 'Completed',
-            flexDirection: 'row',
-          }
-        ]
       };
     } else {
       this.state = {
         name: '',
-        sets: {},
-        updating:false,
-        radioButtons: [
-          {
-            label: 'In Progress',
-            value: 'stage-1',
-            checked: true,
-            flexDirection: 'row',
-            size: 14
-          },
-          {
-            label: 'Completed',
-            value: 'stage-2',
-            size: 14
-          }
-        ]
+        sets: '',
+        config: '',
+        updating:false
       };
     }
     this.handlePress = this.handlePress.bind(this);
@@ -54,47 +27,33 @@ export class CreateExerciseForm extends React.Component {
 
   handlePress(){
     // Validate data
-    this.props.onExerciseSave({workout: this.props.workout, exercise: this.props.existingExercise, new_exercise: {name: this.state.name}});
+    this.props.onExerciseSave({workout: this.props.workout, exercise: this.props.existingExercise, new_exercise: this.state});
   }
 
   render() {
     return (
       <View>
-        <Text>Name:</Text>
+        <Text style={{fontSize: 20}} >Name:</Text>
         <TextInput
-          style={{height: 40}}
+          style={{height: 80, fontSize: 30}}
           placeholder="Exercise1"
           value={this.state.name}
           onChangeText={(name) => this.setState({name})}
           autoFocus={true}
         />
-        <Text>Sets:</Text>
+        <Text style={{fontSize: 20}} >Sets:</Text>
         <TextInput
-          style={{height: 40}}
+          style={{height: 80, fontSize: 30 }}
           placeholder="Option"
-          value={this.state.name}
-          onChangeText={(name) => this.setState({name})}
-          autoFocus={true}
+          value={this.state.sets}
+          onChangeText={(sets) => this.setState({sets})}
         />
+        <Text style={{fontSize: 20}} >Config:</Text>
         <TextInput
-          style={{height: 40}}
+          style={{height: 80, fontSize: 30 }}
           placeholder="Value"
-          value={this.state.name}
-          onChangeText={(name) => this.setState({name})}
-          autoFocus={true}
-        />
-        <TextInput
-          style={{height: 40}}
-          placeholder="Unit"
-          value={this.state.name}
-          onChangeText={(name) => this.setState({name})}
-          autoFocus={true}
-        />
-        <RadioGroup 
-          color='#484'
-          labelStyle={{fontSize: 14}}
-          radioButtons={this.state.radioButtons}
-          onPress={radioButtons => this.setState({radioButtons})}
+          value={this.state.config}
+          onChangeText={(config) => this.setState({config})}
         />
         <Button
           onPress={() => this.handlePress() }

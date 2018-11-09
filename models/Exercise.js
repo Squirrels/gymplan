@@ -3,10 +3,12 @@ import ExerciseConfig from './ExerciseConfig.js'
 
 export default class Exercise {
 	name: string;
-	sets: ExerciseSet;
-	config: ExerciseConfig;
-	constructor(name: string){
-		this.name = name;
+	sets: string;
+	config: string;
+	constructor(data: Object){
+		this.name = data.name;
+		this.sets = data.sets;
+		this.config = data.config;
 	}
 }
 

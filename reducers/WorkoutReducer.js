@@ -14,6 +14,12 @@ function findByName(elements, name) {
     }
 }
 
+function updateExerciseValues(exercise, data){
+  exercise.name = data.name;
+  exercise.sets = data.sets;
+  exercise.config = data.config;
+}
+
 const workoutReducer =  (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'CREATE_WORKOUT':
@@ -27,7 +33,7 @@ const workoutReducer =  (state = INITIAL_STATE, action) => {
       var newState = state;
       // Iterate
       newState.all.find( workout => workout.name === action.payload.workout.name )
-        .exercises.push(new Exercise(action.payload.new_exercise.name)
+        .exercises.push(new Exercise(action.payload.new_exercise)
       );
       return { ...state, ...newState };
     case 'EDIT_EXERCISE':
@@ -35,8 +41,7 @@ const workoutReducer =  (state = INITIAL_STATE, action) => {
       // Find the workout
       var workout = findByName(newState.all, action.payload.workout.name);
       var exercise =   findByName(workout.exercises, action.payload.exercise.name);
-      exercise.name = action.payload.new_exercise.name;
-      // Jesus fucking CHRIST
+      updateExerciseValues(exercise, action.payload.new_exercise);
       return { ...state, ...newState };
     default:
       return state

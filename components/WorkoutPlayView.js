@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-export class WorkoutElementView extends React.Component {
+export class WorkoutPlayView extends React.Component {
 	constructor(props) {
     super(props);
   }

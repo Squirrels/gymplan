@@ -14,8 +14,7 @@ function findByName(elements, name) {
     }
 }
 
-
-const workoutReducer = (state = INITIAL_STATE, action) => {
+const workoutReducer =  (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'CREATE_WORKOUT':
       //const current = state;

@@ -3,11 +3,14 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
-import { Provider } from 'react-redux';
+import { Provider} from 'react-redux';
 import { createStore } from 'redux';
-import workoutReducer from './reducers/WorkoutReducer';
 
-const store = createStore(workoutReducer);
+import { AsyncStorage } from "react-native"
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistor, store } from './store';
+
+//const store = createStore(workoutReducer);
 
 export default class App extends React.Component {
   state = {
@@ -26,10 +29,12 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={ store }>
+          <PersistGate loading={null} persistor={persistor}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
+          </PersistGate>
         </Provider>
       );
     }

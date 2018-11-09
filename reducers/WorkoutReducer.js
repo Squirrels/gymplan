@@ -43,6 +43,12 @@ const workoutReducer =  (state = INITIAL_STATE, action) => {
       var exercise =   findByName(workout.exercises, action.payload.exercise.name);
       updateExerciseValues(exercise, action.payload.new_exercise);
       return { ...state, ...newState };
+    case 'DELETE_WORKOUT':
+      // Find workout, then delete it
+      var newState = state;
+      var workout = findByName(newState.all, action.payload);
+      newState.all.splice( newState.all.indexOf(workout), 1 );
+      return { ...state, ...newState };
     default:
       return state
   }

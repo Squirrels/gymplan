@@ -10,11 +10,12 @@ import {
   Button
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
 import { WorkoutListView } from '../components/WorkoutListView'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deleteWorkout } from '../actions/WorkoutActions';
 
 import Workout from '../models/Workout.js';
 import Exercise from '../models/Exercise.js'
@@ -35,16 +36,18 @@ class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    // Get the data
-    // var initialWorkout = new Workout("Workout 1");
-    // initialWorkout.exercises.push(new Exercise("Sample Exercise"))
+    this._onDeletePress = this._onDeletePress.bind(this);
+  }
+
+  _onDeletePress(workoutName){
+    this.props.deleteWorkout(workoutName);
   }
 
   render() {
     const workouts  = this.props.workouts.all;
     return (
         <View style={styles.container}>
-          <WorkoutListView navigation={this.props.navigation} workouts={workouts} />
+          <WorkoutListView navigation={this.props.navigation} workouts={workouts} onDeletePress={this._onDeletePress}/>
           <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => this.props.navigation.navigate('NewWorkout')}>
           </ActionButton>
         </View>
@@ -101,4 +104,11 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    deleteWorkout,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

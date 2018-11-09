@@ -18,3 +18,10 @@ export const editExercise = (data) => (
     payload: data
   }
 );
+
+export const deleteWorkout = (workoutName) => (
+  {
+    type: 'DELETE_WORKOUT',
+    payload: workoutName
+  }
+);

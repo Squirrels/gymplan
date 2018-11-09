@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import Workout from '../models/Workout.js'
 import Exercise from '../models/Exercise.js'
 
-const INITIAL_STATE = { all: [ new Workout("Initial")] };
+const INITIAL_STATE = { all: [] };
 
 function findByName(elements, name) { 
     for(var i=0; i<elements.length; i++){

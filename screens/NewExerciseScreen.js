@@ -14,9 +14,10 @@ import { bindActionCreators } from 'redux';
 import { addExercise, editExercise } from '../actions/WorkoutActions';
 
 class NewExerciseScreen extends React.Component {
+  // headerTitle: 'Create New Exercise',
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: 'Create New Exercise',
+      headerTitle: navigation.getParam('title'),
       headerStyle: {
         backgroundColor: '#f4511e',
         shadowColor: 'transparent',
@@ -29,7 +30,7 @@ class NewExerciseScreen extends React.Component {
     super(props);
     if(this.props.navigation.getParam('exercise') !== undefined){
       this.state = {editing: true}
-      this.props.navigation.setParams({headerTitle:'Update Exercise'});
+      //this.props.navigation.setParams({headerTitle:'Update Exercise'});
     }
     this.handleSavePress = this.handleSavePress.bind(this);
   }

@@ -18,7 +18,7 @@ class WorkoutDetailsScreen extends React.Component {
       headerTitle: navigation.getParam('workout').name,
       headerRight: (
           <Button
-            onPress={() => navigation.navigate('ActiveWorkout')}
+            onPress={() => navigation.navigate('ActiveWorkout', {workout: navigation.getParam('workout')})}
             title="Start"
             color={Platform.OS === 'ios' ? '#fff' : null}
           />
@@ -37,6 +37,7 @@ class WorkoutDetailsScreen extends React.Component {
     this.state = {
       workout: this.props.navigation.getParam('workout')
     };
+    // Set the button
   }
 
   // _onExerciseCreate(data){
@@ -74,7 +75,7 @@ class WorkoutDetailsScreen extends React.Component {
     return (
         <View style={styles.container}>
           <ExercisesListView navigation={navigation} workout={currentWorkout} exercises={exercises} />
-          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => navigation.navigate('NewExercise', {workout: currentWorkout})}>
+          <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => navigation.navigate('NewExercise', {workout: currentWorkout, title: 'Create Exercise'})}>
           </ActionButton>
         </View>
     );

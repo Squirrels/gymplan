@@ -11,7 +11,7 @@ import {
 export default class ActiveWorkoutScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: navigation.getParam('trititle', 'Running!'),
+      headerTitle: "Running " + navigation.getParam('workout').name,
       headerStyle: {
         backgroundColor: '#f4511e',
         shadowColor: 'transparent',
@@ -23,13 +23,22 @@ export default class ActiveWorkoutScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      workout: this.props.navigation.getParam('workout'),
+      current_exercise: 0
+    };
   }
 
   render() {
-    // Logic!
+    const exercises = this.state.workout.exercises;
+    const currentExercise = exercises[this.state.current_exercise];
     return (
         <View style={styles.container}>
-          <Text> Running activity 1</Text>
+          <Text
+            onPress={() => console.log("YEAH")}
+          >
+            {currentExercise.name}
+          </Text>
         </View>
     );
   }

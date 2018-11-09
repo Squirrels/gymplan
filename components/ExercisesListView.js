@@ -25,7 +25,7 @@ export class ExercisesListView extends React.Component {
                   key={exercise.name}
                   title={exercise.name}
                   subtitle={exercise.name}
-                  onPress={() => this.props.navigation.navigate('NewExercise', {workout: workout, exercise: exercise})}
+                  onPress={() => this.props.navigation.navigate('NewExercise', {workout: workout, exercise: exercise, title: 'Edit Exercise'})}
                 />
               ))
             }
